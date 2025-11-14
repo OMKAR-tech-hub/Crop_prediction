@@ -31,80 +31,74 @@ st.set_page_config(page_title="Crop Prediction", layout="wide")
 st.markdown("""
 <style>
 
-.stApp {
-    background: linear-gradient(135deg, #1b4332, #2d6a4f, #40916c);
+html, body, [class*="css"]  {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Glass card */
-.glass-box {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    padding: 30px;
+/* PAGE BACKGROUND */
+.stApp {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f, #40916c);
+    padding: 20px;
+}
+
+/******** TITLE ********/
+h1 {
+    color: #b7fbd3 !important;
+    text-shadow: 0px 0px 12px #00ffb3;
+    font-weight: 800 !important;
+    text-align: center;
+}
+
+/******** CARD ********/
+.block-container {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 40px;
     border-radius: 20px;
-    max-width: 850px;
-    margin: auto;
-    box-shadow: 0px 4px 25px rgba(0,0,0,0.25);
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
     animation: fadeIn 1.2s ease-in-out;
 }
 
-/* Title */
-.title {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 800;
-    color: #b7fbd3;
-    text-shadow: 0px 0px 15px #00ffb3;
-    margin-bottom: 5px;
-}
-
-.subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #e6ffe9;
-    margin-bottom: 25px;
-}
-
-/* Fade animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Input field styling */
-.stNumberInput > div > input {
-    background-color: #ffffffcc !important;
+/******** INPUT BOXES ********/
+input[type="number"] {
+    background: #ffffffdd !important;
     border-radius: 10px !important;
+    height: 45px;
+    font-size: 16px;
 }
 
-/* Button styling */
-.stButton > button {
-    background: #52b788;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1.2rem;
+/******** BUTTON ********/
+button[kind="primary"] {
+    background-color: #52b788 !important;
+    border-radius: 10px !important;
+    padding: 10px 25px !important;
+    font-size: 18px !important;
     border: none;
-    transition: 0.3s;
 }
 
-.stButton > button:hover {
-    background: #74c69d;
+button[kind="primary"]:hover {
+    background-color: #74c69d !important;
     transform: scale(1.05);
 }
 
-/* Result card */
+/******** RESULT CARD ********/
 .result-card {
-    background: rgba(0, 0, 0, 0.60);
-    color: #b7fbd3;
+    background: rgba(0,0,0,0.55);
     padding: 25px;
     border-radius: 15px;
     margin-top: 20px;
-    text-align: left;
+    color: #b7fbd3;
+    font-size: 17px;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
 </style>
 """, unsafe_allow_html=True)
+
 
 # -------------------------------
 # UI START
