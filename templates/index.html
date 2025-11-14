@@ -79,6 +79,21 @@
         font-weight: bold;
         text-shadow: 0px 0px 8px #00ff90;
       }
+
+      .explanation-box {
+        background: rgba(0, 0, 0, 0.65);
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 15px;
+        color: #e0ffe0;
+      }
+
+      .download-btn {
+        margin-top: 15px;
+        background-color: #00c853;
+        color: white;
+        border: none;
+      }
     </style>
   </head>
 
@@ -90,7 +105,15 @@
 
         {% if prediction_text %}
         <div class="result-card">
-          <h3>{{ prediction_text }}</h3>
+          <h3 id="prediction">{{ prediction_text }}</h3>
+
+          <!-- Explanation Box -->
+          <div class="explanation-box" id="explanation"></div>
+
+          <!-- Download Button -->
+          <button class="btn btn-primary download-btn" onclick="downloadReport()">
+            Download Report
+          </button>
         </div>
         {% endif %}
 
@@ -139,6 +162,201 @@
       </div>
     </div>
 
+    <!-- JS For Explanation + Download -->
+    <script>const explanationData = {
+      "Rice": 
+  `Rice thrives in hot and humid climates, and your input suggests a suitable environment.
+  Here’s why Rice fits your conditions:
+  • Rice grows best with high nitrogen availability, matching your soil values.
+  • It requires high humidity and warm temperatures, which your inputs reflect.
+  • The crop prefers heavy rainfall and waterlogged conditions, suitable for your rainfall data.
+  • pH levels between 5.5–7 are ideal, and your soil pH falls in this range.`,
+
+    "Maize": 
+  `Maize is a versatile crop that adapts well to a wide climatic range.
+  Your inputs match its key requirements:
+  • Maize prefers moderate temperatures and good sunlight, consistent with your temperature.
+  • It needs balanced NPK levels, which your soil seems to have.
+  • It thrives in regions with moderate rainfall, similar to your rainfall value.
+  • The pH you provided falls within the ideal range of 5.5–7.5.`,
+
+    "Chickpea": 
+  `Chickpea grows very well in semi-arid regions and dry climates.
+  Your inputs support Chickpea cultivation because:
+  • Chickpea prefers low humidity, and your humidity value matches this requirement.
+  • It grows with moderate temperatures and minimal rainfall.
+  • It thrives in well-drained soil with neutral pH, fitting your soil conditions.`,
+
+    "Kidneybeans": 
+  `Kidneybeans grow very well in warm, moderately humid environments.
+  Here’s why it fits your inputs:
+  • Kidneybeans require nitrogen-rich soil, and your Nitrogen value supports this.
+  • They perform best under warm temperatures between 18–28°C, matching your input.
+  • Moderate rainfall is ideal, similar to the rainfall you entered.
+  • The crop thrives in soil pH between 6–7, which aligns with your soil pH.
+  • Humidity conditions you provided match the crop’s preference.`,
+
+    "Pigeonpeas": 
+  `Pigeonpeas grow well in semi-arid climates.
+  Your inputs match its ideal conditions because:
+  • They withstand dry conditions and moderate temperatures.
+  • Require minimal humidity, which your input supports.
+  • Grow best in well-drained soil with moderate rainfall.`,
+
+    "Mothbeans": 
+  `Mothbeans are drought-resistant and thrive in harsh, dry climates.
+  Reasons it matches your inputs:
+  • High temperature tolerance aligns with your temperature values.
+  • They require very low rainfall, matching your data.
+  • They can grow even in nutrient-poor soil conditions.`,
+
+    "Mungbean": 
+  `Mungbean grows quickly in warm, moderately humid climates.
+  Your inputs support it because:
+  • It thrives in warm temperatures, similar to your data.
+  • Requires balanced soil nutrients, matching your NPK levels.
+  • Prefers moderate humidity and non-waterlogged soil.`,
+
+    "Blackgram": 
+  `Blackgram is a pulse crop that loves warm climates.
+  Here’s why it fits:
+  • Requires nitrogen-rich soil — supported by your Nitrogen input.
+  • Needs warm temperature and moderate humidity, matching your values.
+  • Grows well with moderate rainfall.`,
+
+    "Lentil": 
+  `Lentil grows excellently in cooler environments.
+  Your data supports Lentil because:
+  • Requires moderate rainfall and low humidity.
+  • Prefers soil pH 6–7.5, matching your soil.
+  • Thrives with low to moderate temperatures.`,
+
+    "Pomegranate": 
+  `Pomegranate thrives in dry climates.
+  Reasons it fits your input:
+  • Prefers low humidity, similar to your humidity input.
+  • Requires warm temperature and well-drained soil.
+  • Can tolerate limited rainfall.`,
+
+    "Banana": 
+  `Banana grows well in hot and humid climates with nutrient-rich soil.
+  Your inputs match because:
+  • Warm temperature is highly suitable.
+  • High humidity supports banana growth.
+  • Requires plenty of soil nutrients (NPK), which your soil provides.`,
+
+    "Mango": 
+  `Mango trees love hot climates and moderate humidity.
+  Your conditions match because:
+  • Warm temperature is optimal.
+  • Moderate rainfall supports growth.
+  • Soil pH and nutrient levels align with mango requirements.`,
+
+    "Grapes": 
+  `Grapes grow best in dry climates with plenty of sunlight.
+  Why it fits your conditions:
+  • Grapes prefer low humidity — matching your inputs.
+  • Moderate temperature and limited rainfall are ideal.
+  • Well-drained soil and suitable pH support grape cultivation.`,
+
+    "Watermelon": 
+  `Watermelon thrives in hot climates with sandy, well-drained soil.
+  Your conditions match because:
+  • High temperature supports faster growth.
+  • Moderate rainfall fits its needs.
+  • Prefers soil pH between 6–7.5, which matches yours.`,
+
+    "Muskmelon": 
+  `Muskmelon grows in hot, dry regions.
+  Why it suits your inputs:
+  • Requires high temperatures.
+  • Prefers sandy or light soil with low humidity.
+  • Moderate rainfall is ideal.`,
+
+    "Apple": 
+  `Apple trees need cooler climates to grow.
+  Your data supports Apples because:
+  • They need moderate rainfall.
+  • Soil pH and nutrients align with apple requirements.
+  • Humidity and temperature provided fit well for apple orchards.`,
+
+    "Orange": 
+  `Oranges need warm temperatures and slightly acidic soil.
+  Your data supports oranges because:
+  • Your pH value is within ideal acidic-to-neutral range.
+  • Requires moderate humidity and warm climate.
+  • Moderate rainfall supports citrus growth.`,
+
+    "Papaya": 
+  `Papaya grows vigorously in hot, humid climates.
+  Your conditions support Papaya because:
+  • Warm temperature helps fast growth.
+  • Moderate rainfall and humidity are beneficial.
+  • Soil nutrients provided match its requirements.`,
+
+    "Coconut": 
+  `Coconut palms thrive in coastal-like climate.
+  Your inputs match its needs:
+  • High humidity suits coconut growth.
+  • Warm temperature is ideal.
+  • Sandy, well-drained soil preference matches your pH and nutrient values.`,
+
+    "Cotton": 
+  `Cotton grows best in high temperatures and low humidity.
+  Your data supports Cotton because:
+  • High temperature is ideal.
+  • Low humidity matches cotton’s needs.
+  • Prefers black soil with moderate rainfall.`,
+
+    "Jute": 
+  `Jute requires hot and humid weather.
+  Your inputs fit because:
+  • High humidity is perfect for jute.
+  • Needs plenty of rainfall — matching your values.
+  • Warm temperature supports fibre formation.`,
+
+    "Coffee": 
+  `Coffee plants grow in cool, shaded tropical climates.
+  Your values align because:
+  • Moderate temperature is ideal.
+  • Requires balanced rainfall.
+  • Soil pH and nutrient levels match coffee-growing conditions.`
+};
+
+
+      window.onload = function() {
+        const predictionText = document.getElementById("prediction")?.innerText;
+
+        if (predictionText) {
+          const crop = predictionText.split(" ")[0];
+          document.getElementById("explanation").innerText =
+            explanationData[crop] || "Suitable environmental conditions match this crop's requirements.";
+        }
+      };
+
+      function downloadReport() {
+        const prediction = document.getElementById("prediction").innerText;
+        const explanation = document.getElementById("explanation").innerText;
+
+        const text = 
+`Crop Recommendation Report
+
+${prediction}
+
+Why this crop?
+${explanation}
+
+Thank you for using the Crop Recommendation System!`;
+
+        const blob = new Blob([text], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "crop_recommendation_report.txt";
+        link.click();
+      }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+
