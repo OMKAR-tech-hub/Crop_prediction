@@ -22,7 +22,6 @@ except Exception as e:
 # Streamlit UI
 # -------------------------------
 st.title("🌾 Crop Prediction System")
-
 st.write("Enter the soil & weather values below:")
 
 N = st.number_input("Nitrogen", value=0.0)
@@ -39,16 +38,13 @@ rainfall = st.number_input("Rainfall", value=0.0)
 if st.button("Predict Crop"):
     try:
         input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
-        st.write("📥 Input data:", input_data)
 
         # Scale if scaler exists
         if scaler is not None:
             input_data = scaler.transform(input_data)
-            st.write("📊 Scaled data:", input_data)
 
         # Predict
         prediction = model.predict(input_data)
-        st.write("🔮 Raw model output:", prediction)
 
         # Crop dictionary mapping
         crop_dict = {
@@ -60,10 +56,32 @@ if st.button("Predict Crop"):
         }
 
         crop = crop_dict.get(int(prediction[0]), "Unknown Crop")
-        result = f"🌱 **Recommended Crop:** {crop}"
+
+        # ------------------------------
+        # Suggestion Text (Your original message)
+        # ------------------------------
+        result = f"""
+🌱 **Recommended Crop:** {crop}
+
+📝 **Suggestions:**
+• Ensure proper irrigation and soil fertility.
+• Maintain correct pH value and nutrient balance.
+• Monitor rainfall & humidity for better growth.
+"""
 
         st.success(result)
 
+        # ------------------------------
+        # Download TXT button
+        # ------------------------------
+        file_content = f"Recommended Crop: {crop}\n\nSuggestions:\n- Ensure proper irrigation and soil fertility.\n- Maintain correct pH and nutrients.\n- Monitor rainfall & humidity."
+
+        st.download_button(
+            label="📥 Download Result as TXT",
+            data=file_content,
+            file_name="crop_prediction.txt",
+            mime="text/plain"
+        )
+
     except Exception as e:
         st.error(f"❌ Error during prediction: {e}")
-
